@@ -5,6 +5,8 @@ import {
     SelectField,
 } from 'material-ui';
 
+import PlayerSelector from '../components/PlayerSelector';
+
 export default class NewGame extends Component {
     constructor(props) {
         super(props);
@@ -53,34 +55,52 @@ export default class NewGame extends Component {
     _renderPlayerSelectionForm() {
         return (
             <div>
-                <SelectField
-                    name={'playerOne'}
-                    floatingLabelText={'Player One'}
-                    floatingLabelFixed={true}
-                    value={this.state.playerOne}
-                    key={'playerOne'}
-                    onChange={(evt, idx, playerOne) => {
+                <PlayerSelector
+                    fieldName={'playerOne'}
+                    fieldLabel={'Player One'}
+                    players={this.state.players.filter(p => this.state.playerTwo !== p.name)}
+                    selected={this.state.playerOne}
+                    onPlayerCreated={(name) => {
+                        let {players} = this.state;
+
+                        players.push({
+                            name,
+                            wins: 0,
+                            losses: 0
+                        });
+
                         this.setState({
-                            playerOne
+                            players,
+                            playerOne: name
                         });
                     }}
-                >
-                    {this.state.players.map(p => <MenuItem value={p.name} key={p.name} primaryText={p.name} />)}
-                </SelectField>
-                <SelectField
-                    name={'playerTwo'}
-                    floatingLabelText={'Player Two'}
-                    floatingLabelFixed={true}
-                    value={this.state.playerTwo}
-                    key={'playerTwo'}
-                    onChange={(evt, idx, playerTwo) => {
+                    onSelectionChange={(playerOne) => {
+                        this.setState({playerOne});
+                    }}
+                />
+                <PlayerSelector
+                    fieldName={'playerTwo'}
+                    fieldLabel={'Player Two'}
+                    players={this.state.players.filter(p => this.state.playerOne !== p.name)}
+                    selected={this.state.playerTwo}
+                    onPlayerCreated={(name) => {
+                        let {players} = this.state;
+
+                        players.push({
+                            name,
+                            wins: 0,
+                            losses: 0
+                        });
+
                         this.setState({
-                            playerTwo
+                            players,
+                            playerTwo: name
                         });
                     }}
-                >
-                    {this.state.players.map(p => <MenuItem value={p.name} key={p.name} primaryText={p.name} />)}
-                </SelectField>
+                    onSelectionChange={(playerTwo) => {
+                        this.setState({playerTwo});
+                    }}
+                />
                 <FlatButton
                     label={'Start Game'}
                     disabled={!(this.state.playerOne && this.state.playerTwo)}
