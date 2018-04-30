@@ -6,6 +6,9 @@ import {
 } from 'material-ui';
 
 import PlayerSelector from '../components/PlayerSelector';
+import {
+    createPlayer, getPlayers, logGameResults, getPlayer
+} from '../storage';
 
 export default class NewGame extends Component {
     constructor(props) {
@@ -15,31 +18,30 @@ export default class NewGame extends Component {
             playerOne: null,
             playerTwo: null,
             started: false,
-            players: [{
-                name: 'Lebron James',
-                wins: 0,
-                losses: 0
-            }, {
-                name: 'Joel Embiid',
-                wins: 0,
-                losses: 0
-            }, {
-                name: 'Ben Simmons',
-                wins: 0,
-                losses: 0
-            }, {
-                name: 'James Harden',
-                wins: 0,
-                losses: 0
-            }]
+            players: []
         };
+    }
+
+    componentWillMount() {
+        this.loadPlayers();
+    }
+
+    loadPlayers = async() => {
+        const players = await getPlayers();
+
+        this.setState({
+            players
+        });
     }
 
     saveResults = async() => {
         let {winner, started, playerOne, playerTwo} = this.state;
 
-        // TODO: save results
-        window.alert(`${winner} won!`);
+        //save winner
+        await logGameResults(winner, winner === playerOne ? playerTwo : playerOne);
+
+        const player = await getPlayer(winner);
+        window.alert(`${winner} won! (#${player && player.wins})`);
 
         // reset state
         winner = playerOne = playerTwo = null;
@@ -52,6 +54,15 @@ export default class NewGame extends Component {
         });
     }
 
+    createPlayer = async (player, name) => {
+        await createPlayer(name);
+        await this.loadPlayers();
+
+        this.setState({
+            [player]: name
+        });
+    }
+
     _renderPlayerSelectionForm() {
         return (
             <div>
@@ -61,18 +72,7 @@ export default class NewGame extends Component {
                     players={this.state.players.filter(p => this.state.playerTwo !== p.name)}
                     selected={this.state.playerOne}
                     onPlayerCreated={(name) => {
-                        let {players} = this.state;
-
-                        players.push({
-                            name,
-                            wins: 0,
-                            losses: 0
-                        });
-
-                        this.setState({
-                            players,
-                            playerOne: name
-                        });
+                        this.createPlayer('playerOne', name);
                     }}
                     onSelectionChange={(playerOne) => {
                         this.setState({playerOne});
@@ -84,18 +84,7 @@ export default class NewGame extends Component {
                     players={this.state.players.filter(p => this.state.playerOne !== p.name)}
                     selected={this.state.playerTwo}
                     onPlayerCreated={(name) => {
-                        let {players} = this.state;
-
-                        players.push({
-                            name,
-                            wins: 0,
-                            losses: 0
-                        });
-
-                        this.setState({
-                            players,
-                            playerTwo: name
-                        });
+                        this.createPlayer('playerTwo', name);
                     }}
                     onSelectionChange={(playerTwo) => {
                         this.setState({playerTwo});
