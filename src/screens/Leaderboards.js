@@ -35,8 +35,8 @@ export default class Leaderboards extends Component {
                     >
                         <TableRow>
                             <TableHeaderColumn>Name</TableHeaderColumn>
-                            <TableHeaderColumn numeric>Wins</TableHeaderColumn>
-                            <TableHeaderColumn numeric>Losses</TableHeaderColumn>
+                            <TableHeaderColumn>Wins</TableHeaderColumn>
+                            <TableHeaderColumn>Losses</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody
@@ -48,8 +48,8 @@ export default class Leaderboards extends Component {
                             return (
                             <TableRow key={n.name}>
                                 <TableRowColumn>{n.name}</TableRowColumn>
-                                <TableRowColumn numeric>{n.wins}</TableRowColumn>
-                                <TableRowColumn numeric>{n.losses}</TableRowColumn>
+                                <TableRowColumn>{n.wins}</TableRowColumn>
+                                <TableRowColumn>{n.losses}</TableRowColumn>
                             </TableRow>
                             );
                         })}
