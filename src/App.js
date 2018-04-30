@@ -7,27 +7,30 @@ import {
 import './App.css';
 import NewGame from './screens/NewGame';
 import Leaderboards from './screens/Leaderboards';
+import { MuiThemeProvider } from 'material-ui/styles';
 
 class App extends Component {
-  render() {
-    return (
-      <HashRouter>
-          <div className="App">
-              <header className="App-header">
-                  <h1 className="App-title">Pool Leaderboards</h1>
-                  <ul>
-                      <li><NavLink to="/new-game">New Game</NavLink></li>
-                      <li><NavLink to="/leaderboards">Leaderboards</NavLink></li>
-                  </ul>
-              </header>
-              <div className="App-content">
-                  <Route path="/new-game" component={NewGame}/>
-                  <Route path="/leaderboards" component={Leaderboards}/>
-              </div>
-          </div>
-      </HashRouter>
-    );
-  }
+    render() {
+        return (
+            <MuiThemeProvider>
+                <HashRouter>
+                    <div className="App">
+                        <header className="App-header">
+                            <h1 className="App-title">Pool Leaderboards</h1>
+                            <ul>
+                                <li><NavLink to="/new-game">New Game</NavLink></li>
+                                <li><NavLink to="/leaderboards">Leaderboards</NavLink></li>
+                            </ul>
+                        </header>
+                        <div className="App-content">
+                            <Route path="/new-game" component={NewGame}/>
+                            <Route path="/leaderboards" component={Leaderboards}/>
+                        </div>
+                    </div>
+                </HashRouter>
+            </MuiThemeProvider>
+        );
+    }
 }
 
 export default App;
