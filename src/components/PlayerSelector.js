@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-    FlatButton,
+    Button,
     MenuItem,
-    SelectField,
+    Select,
     TextField,
 } from 'material-ui';
 
@@ -50,32 +50,32 @@ export default class PlayerSelector extends Component {
 
                         this.setState({newPlayerName});
                     }} />
-                    <FlatButton
-                        label={'Cancel'}
+                    <br/>
+                    <Button
                         onClick={() => {
                             this.setState({
                                 createPlayer: false,
                                 newPlayerName: null
                             });
                         }}
-                    />
-                    <FlatButton
-                        label={'Save'}
+                    >Cancel</Button>
+                    <Button
                         onClick={this._saveNewPlayer}
                         disabled={!this.state.newPlayerName}
-                    />
+                    >Save</Button>
                 </div>
             );
         } else {
             return (
-                <SelectField
+                <Select
                     name={this.props.fieldName}
-                    floatingLabelText={this.props.fieldLabel}
-                    floatingLabelFixed={true}
-                    value={this.props.selected}
+                    label={this.props.fieldLabel}
+                    value={this.props.selected || ''}
                     key={this.props.fieldName}
-                    onChange={(evt, idx, player) => {
-                        if (idx === 0) {
+                    style={{minWidth: 250}}
+                    onChange={(evt, idx) => {
+                        let player = evt && evt.target && evt.target.value;
+                        if (idx === 0 || player === 'create') {
                             this.props.onSelectionChange(null);
                             return this.setState({
                                 createPlayer: true
@@ -84,9 +84,9 @@ export default class PlayerSelector extends Component {
                         this.props.onSelectionChange(player);
                     }}
                 >
-                    <MenuItem value={'create'} primaryText={'Create New Player'}/>
-                    {this.props.players.map(p => <MenuItem value={p.name} key={p.name} primaryText={p.name} />)}
-                </SelectField>
+                    <MenuItem value={'create'}>Create New Player</MenuItem>
+                    {this.props.players.map(p => <MenuItem value={p.name} key={p.name}>{p.name}</MenuItem>)}
+                </Select>
             );
         }
     }

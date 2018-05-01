@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {
-    FlatButton,
+    Button,
     MenuItem,
-    SelectField,
+    Select,
 } from 'material-ui';
 
 import PlayerSelector from '../components/PlayerSelector';
@@ -90,15 +90,14 @@ export default class NewGame extends Component {
                         this.setState({playerTwo});
                     }}
                 />
-                <FlatButton
-                    label={'Start Game'}
+                <Button
                     disabled={!(this.state.playerOne && this.state.playerTwo)}
                     onClick={() => {
                         this.setState({
                             started: true
                         });
                     }}
-                />
+                >Start Game</Button>
             </div>
         );
     }
@@ -106,27 +105,27 @@ export default class NewGame extends Component {
     _renderWinnerSelectionForm() {
         return (
             <div>
-                <SelectField
+                <Select
                     name={'winner'}
-                    floatingLabelText={'Winner'}
-                    floatingLabelFixed={true}
-                    value={this.state.winner}
+                    label={'Winner'}
+                    value={this.state.winner || ''}
                     key={'winner'}
-                    onChange={(evt, idx, winner) => {
+                    style={{minWidth: 250}}
+                    onChange={(evt) => {
+                        let winner = evt && evt.target && evt.target.value;
                         this.setState({
                             winner
                         });
                     }}
                 >
-                    {[this.state.playerOne, this.state.playerTwo].map(p => <MenuItem value={p} key={p} primaryText={p} />)}
-                </SelectField>
-                <FlatButton
-                    label={'Save Results'}
+                    {[this.state.playerOne, this.state.playerTwo].map(p => <MenuItem value={p} key={p}>{p}</MenuItem>)}
+                </Select>
+                <Button
                     disabled={!(this.state.winner)}
                     onClick={() => {
                         this.saveResults();
                     }}
-                />
+                >Save Results</Button>
             </div>
         );
     }
