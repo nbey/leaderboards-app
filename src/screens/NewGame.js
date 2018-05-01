@@ -17,6 +17,7 @@ export default class NewGame extends Component {
         this.state = {
             playerOne: null,
             playerTwo: null,
+            winner: null,
             started: false,
             players: []
         };
