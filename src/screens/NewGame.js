@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    Badge,
     Button,
     MenuItem,
     Select,
@@ -10,6 +11,14 @@ import PlayerSelector from '../components/PlayerSelector';
 import {
     createPlayer, getPlayers, logGameResults, getPlayer
 } from '../storage';
+
+const styles = {
+    badge: {
+        maxWidth: '50%',
+        display: 'block',
+        height: 5
+    }
+};
 
 export default class NewGame extends Component {
     constructor(props) {
@@ -80,6 +89,7 @@ export default class NewGame extends Component {
                         this.setState({playerOne});
                     }}
                 />
+                <Badge color="primary" badgeContent="VS" style={styles.badge}> </Badge>
                 <PlayerSelector
                     fieldName={'playerTwo'}
                     fieldLabel={'Player Two'}
@@ -92,6 +102,7 @@ export default class NewGame extends Component {
                         this.setState({playerTwo});
                     }}
                 />
+                <br/>
                 <Button
                     disabled={!(this.state.playerOne && this.state.playerTwo)}
                     onClick={() => {
