@@ -3,6 +3,7 @@ import {
     Button,
     MenuItem,
     Select,
+    Typography,
 } from 'material-ui';
 
 import PlayerSelector from '../components/PlayerSelector';
@@ -132,10 +133,19 @@ export default class NewGame extends Component {
     }
 
     render() {
+        let content;
+
         if (this.state.started) {
-            return this._renderWinnerSelectionForm();
+            content = this._renderWinnerSelectionForm();
         } else {
-            return this._renderPlayerSelectionForm();
+            content = this._renderPlayerSelectionForm();
         }
+
+        return (
+            <div>
+                <Typography variant={'headline'}>New Game</Typography>
+                {content}
+            </div>
+        );
     }
 }

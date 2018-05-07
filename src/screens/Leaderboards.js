@@ -8,6 +8,7 @@ import {
     TableRow,
     TableSortLabel,
     Tooltip,
+    Typography,
 } from 'material-ui';
 import { getPlayers } from '../storage';
 
@@ -55,62 +56,65 @@ export default class Leaderboards extends Component {
 
     render() {
         return (
-            <Paper>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell
-                                numeric={true}
-                                sortDirection={this.state.orderBy === 'wins' ? this.state.order : false}
-                            >
-                                Wins
-                                <Tooltip
-                                    title="Sort"
-                                    placement={'bottom-end'}
-                                    enterDelay={150}
-                                    >
-                                    <TableSortLabel
-                                        active={this.state.orderBy === 'wins'}
-                                        direction={this.state.order}
-                                        onClick={() => this.onSortClick('wins', ...arguments)}
-                                    >
-                                    </TableSortLabel>
-                                </Tooltip>
-                            </TableCell>
-                            <TableCell
-                                numeric={true}
-                                sortDirection={this.state.orderBy === 'losses' ? this.state.order : false}
-                            >
-                                <Tooltip
-                                    title="Sort"
-                                    placement={'bottom-end'}
-                                    enterDelay={150}
-                                    >
-                                    <TableSortLabel
-                                        active={this.state.orderBy === 'losses'}
-                                        direction={this.state.order}
-                                        onClick={() => this.onSortClick('losses', ...arguments)}
-                                    >
-                                        Losses
-                                    </TableSortLabel>
-                                </Tooltip>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.players.map(n => {
-                            return (
-                            <TableRow key={n.name}>
-                                <TableCell>{n.name}</TableCell>
-                                <TableCell numeric>{n.wins}</TableCell>
-                                <TableCell numeric>{n.losses}</TableCell>
+            <div>
+                <Typography variant={'headline'}>Leaderboards</Typography>
+                <Paper>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell
+                                    numeric={true}
+                                    sortDirection={this.state.orderBy === 'wins' ? this.state.order : false}
+                                >
+                                    Wins
+                                    <Tooltip
+                                        title="Sort"
+                                        placement={'bottom-end'}
+                                        enterDelay={150}
+                                        >
+                                        <TableSortLabel
+                                            active={this.state.orderBy === 'wins'}
+                                            direction={this.state.order}
+                                            onClick={() => this.onSortClick('wins', ...arguments)}
+                                        >
+                                        </TableSortLabel>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell
+                                    numeric={true}
+                                    sortDirection={this.state.orderBy === 'losses' ? this.state.order : false}
+                                >
+                                    <Tooltip
+                                        title="Sort"
+                                        placement={'bottom-end'}
+                                        enterDelay={150}
+                                        >
+                                        <TableSortLabel
+                                            active={this.state.orderBy === 'losses'}
+                                            direction={this.state.order}
+                                            onClick={() => this.onSortClick('losses', ...arguments)}
+                                        >
+                                            Losses
+                                        </TableSortLabel>
+                                    </Tooltip>
+                                </TableCell>
                             </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </Paper>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.players.map(n => {
+                                return (
+                                <TableRow key={n.name}>
+                                    <TableCell>{n.name}</TableCell>
+                                    <TableCell numeric>{n.wins}</TableCell>
+                                    <TableCell numeric>{n.losses}</TableCell>
+                                </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </Paper>
+            </div>
         );
     }
 }
