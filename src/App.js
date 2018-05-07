@@ -21,7 +21,7 @@ import {
     Menu as MenuIcon,
 } from '@material-ui/icons';
 
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 const theme = createMuiTheme();
 
@@ -88,4 +88,4 @@ class App extends Component {
     }
 }
 
-export default withStyles(styles)(App);
+export default App;
