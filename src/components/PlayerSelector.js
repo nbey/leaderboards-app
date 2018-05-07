@@ -67,26 +67,32 @@ export default class PlayerSelector extends Component {
             );
         } else {
             return (
-                <Select
-                    name={this.props.fieldName}
-                    label={this.props.fieldLabel}
-                    value={this.props.selected || ''}
-                    key={this.props.fieldName}
-                    style={{minWidth: 250}}
-                    onChange={(evt, idx) => {
-                        let player = evt && evt.target && evt.target.value;
-                        if (idx === 0 || player === 'create') {
-                            this.props.onSelectionChange(null);
-                            return this.setState({
-                                createPlayer: true
-                            });
-                        }
-                        this.props.onSelectionChange(player);
-                    }}
-                >
-                    <MenuItem value={'create'}>Create New Player</MenuItem>
-                    {this.props.players.map(p => <MenuItem value={p.name} key={p.name}>{p.name}</MenuItem>)}
-                </Select>
+                <div>
+                    <Select
+                        name={this.props.fieldName}
+                        value={this.props.selected || this.props.fieldLabel}
+                        key={this.props.fieldName}
+                        placeholder={this.props.fieldLabel}
+                        style={{minWidth: 250}}
+                        inputProps={{
+                            id: this.props.fieldName
+                        }}
+                        onChange={(evt, idx) => {
+                            let player = evt && evt.target && evt.target.value;
+                            if (idx === 0 || player === 'create') {
+                                this.props.onSelectionChange(null);
+                                return this.setState({
+                                    createPlayer: true
+                                });
+                            }
+                            this.props.onSelectionChange(player);
+                        }}
+                    >
+                        <MenuItem value={this.props.fieldLabel} disabled>{this.props.fieldLabel}</MenuItem>
+                        <MenuItem value={'create'}>Create New Player</MenuItem>
+                        {this.props.players.map(p => <MenuItem value={p.name} key={p.name}>{p.name}</MenuItem>)}
+                    </Select>
+                </div>
             );
         }
     }
