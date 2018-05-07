@@ -66,12 +66,14 @@ export default class NewGame extends Component {
     }
 
     createPlayer = async (player, name) => {
-        await createPlayer(name);
-        await this.loadPlayers();
+        if (!await getPlayer(name)) {
+            await createPlayer(name);
+            await this.loadPlayers();
+            this.setState({
+                [player]: name
+            });
+        }
 
-        this.setState({
-            [player]: name
-        });
     }
 
     _renderPlayerSelectionForm() {
