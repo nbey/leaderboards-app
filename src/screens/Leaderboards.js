@@ -27,7 +27,6 @@ export default class Leaderboards extends Component {
         getPlayers()
             .then(unsortedPlayers => this.sortPlayers(unsortedPlayers, this.state.orderBy, this.state.order))
             .then((players) => {
-                debugger;
                 this.setState({
                     players
                 });
