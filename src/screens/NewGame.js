@@ -135,12 +135,21 @@ export default class NewGame extends Component {
                 >
                     {[this.state.playerOne, this.state.playerTwo].map(p => <MenuItem value={p} key={p}>{p}</MenuItem>)}
                 </Select>
+                <br/>
+                <Button
+                    onClick={() => {
+                        this.setState({
+                            started: false,
+                            winner: null
+                        });
+                    }}
+                >Cancel</Button>
                 <Button
                     disabled={!(this.state.winner)}
                     onClick={() => {
                         this.saveResults();
                     }}
-                >Save Results</Button>
+                >Save</Button>
             </div>
         );
     }
