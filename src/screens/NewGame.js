@@ -51,9 +51,6 @@ export default class NewGame extends Component {
         //save winner
         await logGameResults(winner, winner === playerOne ? playerTwo : playerOne);
 
-        const player = await getPlayer(winner);
-        window.alert(`${winner} won! (#${player && player.wins})`);
-
         // reset state
         winner = playerOne = playerTwo = null;
         started = false;
